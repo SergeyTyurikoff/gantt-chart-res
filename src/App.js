@@ -1,11 +1,12 @@
 import './App.css';
-import Project from "./components/cellsSet/Project";
+import Table from "./components/table/Table";
+
 
 function App() {
   return (
-    <div className="App">
-        <Project/>
-    </div>
+    <main className="App">
+        <Table/>
+    </main>
   );
 }
 
