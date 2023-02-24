@@ -1,6 +1,5 @@
 import {Component} from "react";
 
-import Cell from "../cell/Cell";
 import './Project.scss'
 
 class Project extends Component {
@@ -8,65 +7,63 @@ class Project extends Component {
     state = {
         projectName: 'Программирование',
         taskName: 'Изучение React',
-        maxHours: '',
-        hoursOfWork: 0,
+        hoursOfWork: '',
         percentageOfHours: '',
-        hours: [0, 0]
+        maxHours: 30,
+        hours: ['', ''],
     }
 
-    componentDidMount() {
-        console.log(this.state)
+    setStateValues = (index, value) => {
+        this.setState(({hours}) => ({
+            hours: hours.map((item, i) => {
+                if (index === i) {
+                    item = +value;
+                }
+                return item;
+            }),
+            hoursOfWork: hours.reduce((total, donation) => {
+                return total + donation
+            })
+        }))
+        this.setHoursOfWork();
+        this.setPercentageOfHours();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        console.log(this.state)
+    setHoursOfWork = () => {
+        this.setState(({hours}) => ({
+            hoursOfWork: hours.reduce((total, donation) => {
+                return total + donation
+            })
+        }))
     }
 
-    data = [
-        {
-            cellType: "hours",
-            defaultValue: 0,
-            inputType: "number",
-        },
-        {
-            cellType: "hours",
-            defaultValue: 0,
-            inputType: "number",
-        },
-    ]
-
-
-    setStateValues = (type, value) => {
-        switch (type) {
-            case 'maxHours':
-                this.setState({maxHours: value})
-                break;
-            case 'hours':
-                console.log(1)
-                this.setState({hoursOfWork: this.state.hoursOfWork + +value})
-                break;
-        }
+    setPercentageOfHours = () => {
+        this.setState(({hoursOfWork, maxHours}) => ({
+            percentageOfHours: `${Math.floor(hoursOfWork * 100 / maxHours * 10) / 10}%`
+        }))
     }
 
     render() {
 
-        const hoursElems = this.data.map((item, i) => {
-            const {inputType, cellType, defaultValue} = item;
+        const hoursElems = this.state.hours.map((itemValue, i) => {
             return (
-                <Cell key={i} cellType={cellType} action={this.setStateValues} defaultValue={defaultValue} inputType={inputType}/>
+                <input
+                    key={i}
+                    type='number'
+                    className='cell'
+                    onChange={(e) => this.setStateValues(i, e.target.value)}
+                    value={this.state.hours[i]}/>
             )
         })
 
         return (
             <div className='project'>
-                <input type='text' value={this.state.projectName}/>
-                <input type='text' value={this.state.taskName}/>
-                <Cell cellType={'hoursOfWork'} defaultValue={0} readonly={true} inputType={'number'}/>
-                <Cell cellType={'percentageOfHours'} defaultValue={0} readonly={true} inputType={'number'}/>
-                <Cell cellType={'maxHours'} action={this.setStateValues} defaultValue={0} inputType={'number'}/>
+                <input type='text' readOnly={true} value={this.state.projectName}/>
+                <input type='text' readOnly={true} value={this.state.taskName}/>
+                <input readOnly={true} type='number' value={this.state.hoursOfWork}/>
+                <input readOnly={true} type='number' value={this.state.percentageOfHours}/>
+                <input readOnly={true} type='number' value={this.state.maxHours}/>
                 {hoursElems}
-                {/*<Cell cellType={'hours'} action={this.setStateValues} defaultValue='' inputType={'number'}/>*/}
-                {/*<Cell cellType={'hours'} action={this.setStateValues} defaultValue='' inputType={'number'}/>*/}
             </div>
 
         )
