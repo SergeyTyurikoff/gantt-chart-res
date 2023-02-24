@@ -47,38 +47,33 @@ class Project extends Component {
 
         const hoursElems = this.state.hours.map((itemValue, i) => {
             return (
-                <td>
-                    <input
-                        key={i}
-                        type='number'
-                        className='cell type-it th-small text-center'
-                        onChange={(e) => this.setStateValues(i, e.target.value)}
-                        value={this.state.hours[i]}/>
-                </td>
+                <input
+                    key={i}
+                    type='number'
+                    className='cell type-it th-small text-center'
+                    onChange={(e) => this.setStateValues(i, e.target.value)}
+                    value={this.state.hours[i]}/>
             )
         })
 
         return (
-            <tr className='project'>
-                <div className='aside-headers'>
-                    <td>
+            <div className='project'>
+                <div className='chart__row'>
+                    <div className='chart__aside-menu'>
                         <input className='text-left' type='text' readOnly={true} value={this.state.projectName}/>
-                    </td>
-                    <td>
                         <input className='text-left' type='text' readOnly={true} value={this.state.taskName}/>
-                    </td>
-                    <td>
-                        <input className='cell text-center th-small' readOnly={true} type='number' value={this.state.hoursOfWork}/>
-                    </td>
-                    <td>
-                        <input className='cell text-center th-small' readOnly={true} type='text' value={this.state.percentageOfHours}/>
-                    </td>
-                    <td>
-                        <input className='cell text-center th-small' readOnly={true} type='number' value={this.state.maxHours}/>
-                    </td>
+                        <input className='cell text-center th-small' readOnly={true} type='number'
+                               value={this.state.hoursOfWork}/>
+                        <input className='cell text-center th-small' readOnly={true} type='text'
+                               value={this.state.percentageOfHours}/>
+                        <input className='cell text-center th-small' readOnly={true} type='number'
+                               value={this.state.maxHours}/>
+                    </div>
+                    <div className='chart__table'>
+                        {hoursElems}
+                    </div>
                 </div>
-                {hoursElems}
-            </tr>
+            </div>
 
         )
     }

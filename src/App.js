@@ -1,11 +1,11 @@
 import './App.css';
-import Table from "./components/table/Table";
+import Chart from "./components/chart/Chart";
 
 
 function App() {
   return (
     <main className="App">
-        <Table/>
+        <Chart/>
     </main>
   );
 }
