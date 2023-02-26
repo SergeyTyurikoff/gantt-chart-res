@@ -69,6 +69,7 @@ class Chart extends Component {
                         <div className='chart__body'>
                             <Project projectName='Программирование' taskName='Изучение React' maxHours={100}/>
                             <Project projectName='Программирование' taskName='Изучение JS' maxHours={30}/>
+                            <Project projectName='Программирование' taskName='Fetch' maxHours={10}/>
                         </div>
                     </div>
                 </div>
